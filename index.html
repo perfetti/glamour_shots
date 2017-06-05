@@ -2,6 +2,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Glamour Photos</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
   <script>
     window.fbAsyncInit = function() {
       FB.init({
@@ -28,18 +34,34 @@
       buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=011867728287033795387:pl7k6xyfyxk&searchType=image&q=${sanitizedQuery}&callback=hndlr`, null);
     }
 
-    buildScript("http://connect.facebook.net/en_US/sdk.js", 'facebook-jssdk')
+    buildScript("//connect.facebook.net/en_US/sdk.js", 'facebook-jssdk')
 
   </script>
 
   <script src="//www.google.com/jsapi"></script>
+  <style>
+    nav h1 {
+      display: block;
+      margin: 0 auto;
+    }
+    #content {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    #content div img {
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded mb-4">
+      <h1 class="centered">Find your Glamour photos</h1>
+    </nav>
     <div class="container">
       <form>
-        <label for="firstName">Enter your First Name</label>
-        <br />
+        <label class="pr-3" for="firstName">Enter your First Name</label>
         <input type="text" name="firstName" id="firstNameBox" />
         <input type="submit" value="submit" />
       </form>
@@ -49,7 +71,7 @@
       function hndlr(response) {
         for (var i = 0; i < response.items.length; i++) {
           var item = response.items[i];
-          document.getElementById("content").innerHTML += `<br> <img src="${item.link}" />`;
+          document.getElementById("content").innerHTML += `<div class="col-12 col-sm-3"><img src="${item.link}" /></div>`;
         }
       }
       var search = location.search.substring(1);
@@ -60,6 +82,4 @@
         imageSearch(`${queryObject.firstName} glamour shot`);
       }
     </script>
-    <!-- <script src="https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=011867728287033795387:pl7k6xyfyxk&searchType=image&q=keith+glamour+shot&callback=hndlr">
-    </script> -->
 </body>
