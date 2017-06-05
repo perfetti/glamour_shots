@@ -26,12 +26,28 @@
       var sanitizedQuery = encodeURI(query)
       var queryString = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&filter=1`
       if (pageIndex > 0 ){
-        queryString += '&start=${pageIndex*11}';
+        queryString += `&start=${pageIndex*11}`;
       }
       queryString += "&callback=hndlr";
 
       buildScript(queryString, window.pageIndex);
       window.pageIndex += 1;
+    }
+
+    window.setBox = function () {
+      var search = location.search.substring(1);
+      if(search.length > 0){
+        var queryObject = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
+
+        if(queryObject.firstName.length > 0) {
+          document.getElementById('firstNameBox').value = queryObject.firstName;
+          imageSearch(`${queryObject.firstName} glamour shot`);
+        }
+      }
+    }
+
+    window.searchFromBox = function() {
+      imageSearch(document.getElementById('firstNameBox').value);
     }
 
   </script>
@@ -64,6 +80,9 @@
         <input type="submit" value="submit" />
       </form>
       <div id="content"></div>
+      <div class="d-flex justify-content-center p-5">
+        <button onclick="searchFromBox();">Find More Glamour Shots</button>
+      </div>
     </div>
     <script type="text/javascript">
       function hndlr(response) {
@@ -72,19 +91,11 @@
           image = document.createElement('img');
           image.src = item.link;
           div = document.createElement('div');
-          div.className = 'col-12 col-sm-3';
+          div.className = 'col-12 col-sm-3 p-3';
           div.appendChild(image);
           document.getElementById("content").appendChild(div);
         }
       }
-      var search = location.search.substring(1);
-      if(search.length > 0){
-        var queryObject = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
-
-        if(queryObject.firstName.length > 0) {
-          document.getElementById('firstNameBox').value = queryObject.firstName;
-          imageSearch(`${queryObject.firstName} glamour shot`);
-        }
-      }
+      setBox();
     </script>
 </body>
