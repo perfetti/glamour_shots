@@ -21,11 +21,17 @@
     }
 
     var searchEngineId = '011867728287033795387:pl7k6xyfyxk';
-
+    window.pageIndex = 0;
     window.imageSearch = function(query) {
       var sanitizedQuery = encodeURI(query)
-      buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&filter=1&callback=hndlr`, 1);
-      buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&filter=1&start=11&callback=hndlr`, 2);
+      var queryString = `https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&filter=1`
+      if (pageIndex > 0 ){
+        queryString += '&start=${pageIndex*11}';
+      }
+      queryString += "&callback=hndlr";
+
+      buildScript(queryString, window.pageIndex);
+      window.pageIndex += 1;
     }
 
   </script>
@@ -53,7 +59,7 @@
     </nav>
     <div class="container">
       <form>
-        <label class="pr-3" for="firstName">Enter your First Name</label>
+        <label class="pr-3" for="firstName">Enter your Name</label>
         <input type="text" name="firstName" id="firstNameBox" />
         <input type="submit" value="submit" />
       </form>
