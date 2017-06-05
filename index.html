@@ -80,7 +80,7 @@
         <input type="submit" value="submit" />
       </form>
       <div id="content"></div>
-      <div class="d-flex justify-content-center p-5">
+      <div class="d-flex justify-content-center p-5 invisible">
         <button onclick="searchFromBox();">Find More Glamour Shots</button>
       </div>
     </div>
@@ -95,6 +95,7 @@
           div.appendChild(image);
           document.getElementById("content").appendChild(div);
         }
+        $('.invisible').removeClass('invisible');
       }
       setBox();
     </script>
