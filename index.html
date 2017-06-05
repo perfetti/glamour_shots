@@ -75,11 +75,13 @@
         }
       }
       var search = location.search.substring(1);
-      var queryObject = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
+      if(search.length > 0){
+        var queryObject = JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}')
 
-      if(queryObject.firstName.length > 0) {
-        document.getElementById('firstNameBox').value = queryObject.firstName;
-        imageSearch(`${queryObject.firstName} glamour shot`);
+        if(queryObject.firstName.length > 0) {
+          document.getElementById('firstNameBox').value = queryObject.firstName;
+          imageSearch(`${queryObject.firstName} glamour shot`);
+        }
       }
     </script>
 </body>
