@@ -9,7 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
   <script>
-    window.buildScript = function(url, id, callback){
+    window.buildScript = function(url, id){
       (function(d, s, id){
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {return;}
@@ -17,18 +17,15 @@
         js.src = url;
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', id));
-      if(typeof(callback) === 'function'){
-        callback();
-      }
+      console.log(url)
     }
 
     var searchEngineId = '011867728287033795387:pl7k6xyfyxk';
 
     window.imageSearch = function(query) {
       var sanitizedQuery = encodeURI(query)
-      buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&callback=hndlr`, null, function() {
-        buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&start=11&callback=hndlr`, null);
-      });
+      buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&filter=1&callback=hndlr`, 1);
+      buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&filter=1&start=11&callback=hndlr`, 2);
     }
 
   </script>
@@ -66,7 +63,12 @@
       function hndlr(response) {
         for (var i = 0; i < response.items.length; i++) {
           var item = response.items[i];
-          document.getElementById("content").innerHTML += `<div class="col-12 col-sm-3"><img src="${item.link}" /></div>`;
+          image = document.createElement('img');
+          image.src = item.link;
+          div = document.createElement('div');
+          div.className = 'col-12 col-sm-3';
+          div.appendChild(image);
+          document.getElementById("content").appendChild(div);
         }
       }
       var search = location.search.substring(1);
