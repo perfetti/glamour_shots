@@ -9,7 +9,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
   <script>
-    window.buildScript = function(url, id){
+    window.buildScript = function(url, id, callback){
       (function(d, s, id){
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {return;}
@@ -17,11 +17,18 @@
         js.src = url;
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', id));
+      if(typeof(callback) === 'function'){
+        callback();
+      }
     }
+
+    var searchEngineId = '011867728287033795387:pl7k6xyfyxk';
 
     window.imageSearch = function(query) {
       var sanitizedQuery = encodeURI(query)
-      buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=011867728287033795387:pl7k6xyfyxk&searchType=image&q=${sanitizedQuery}&callback=hndlr`, null);
+      buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&callback=hndlr`, null, function() {
+        buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=${searchEngineId}&searchType=image&q=${sanitizedQuery}&start=11&callback=hndlr`, null);
+      });
     }
 
   </script>
