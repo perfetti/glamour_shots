@@ -9,16 +9,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
   <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '1917534028524906',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v2.8'
-      });
-      FB.AppEvents.logPageView();
-    };
-
     window.buildScript = function(url, id){
       (function(d, s, id){
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -33,8 +23,6 @@
       var sanitizedQuery = encodeURI(query)
       buildScript(`https://www.googleapis.com/customsearch/v1?key=AIzaSyBxtW8zQvuO7ozICe4M7_S_cbOjd-orjVs&cx=011867728287033795387:pl7k6xyfyxk&searchType=image&q=${sanitizedQuery}&callback=hndlr`, null);
     }
-
-    buildScript("//connect.facebook.net/en_US/sdk.js", 'facebook-jssdk')
 
   </script>
 
